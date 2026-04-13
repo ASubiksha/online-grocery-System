@@ -1,0 +1,36 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Item', 
+                typeNamePlural: 'Items', 
+                title: { type: #STANDARD, value: 'Product' } } }
+
+annotate view ZC_GROCERY_ITM_110 with
+{
+  @UI.facet: [ { id:            'ItemDetails',
+                 purpose:       #STANDARD,
+                 type:          #IDENTIFICATION_REFERENCE,
+                 label:         'Item Info',
+                 position:      10 } ]
+
+  @UI: { lineItem:       [ { position: 10, label: 'Item No' } ],
+         identification: [ { position: 10, label: 'Item No' } ] }
+  ItemId;
+
+  @UI: { lineItem:       [ { position: 20, label: 'Product' } ],
+         identification: [ { position: 20, label: 'Product' } ] }
+  Product;
+
+  @UI: { lineItem:       [ { position: 30, label: 'Quantity' } ],
+         identification: [ { position: 30, label: 'Quantity' } ] }
+  Quantity;
+
+  @UI: { lineItem:       [ { position: 40, label: 'Price' } ],
+         identification: [ { position: 40, label: 'Price' } ] }
+  Price;
+
+  @UI.hidden: true
+  ItemUuid;
+  
+  @UI.hidden: true
+  OrderUuid;
+}

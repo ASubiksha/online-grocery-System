@@ -1,0 +1,46 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Order', 
+                typeNamePlural: 'Orders', 
+                title: { type: #STANDARD, value: 'OrderId' } } }
+
+annotate view ZC_GROCERY_HDR_110 with 
+{
+  /* Facets for UI Layout */
+  @UI.facet: [ { id:              'Orders',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Order Details',
+                 position:        10 },
+               { id:              'Items',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Order Items',
+                 position:        20,
+                 targetElement:   '_Items'} ]
+
+  /* Fields Configuration */
+  @UI: { lineItem:       [ { position: 10, label: 'Order ID' } ],
+         identification: [ { position: 10, label: 'Order ID' } ],
+         selectionField: [ { position: 10 } ] }
+  OrderId;
+
+  @UI: { lineItem:       [ { position: 20, label: 'Customer' } ],
+         identification: [ { position: 20, label: 'Customer' } ],
+         selectionField: [ { position: 20 } ] }
+  CustomerName;
+
+  @UI: { lineItem:       [ { position: 30, label: 'Total Amount' } ],
+         identification: [ { position: 30, label: 'Total Amount' } ] }
+  TotalPrice;
+
+  @UI: { lineItem:       [ { position: 40, label: 'Status' } ],
+         identification: [ { position: 40, label: 'Status' } ] }
+  OverallStatus;
+
+  @UI.hidden: true
+  OrderUuid;
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

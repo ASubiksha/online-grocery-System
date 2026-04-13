@@ -1,0 +1,27 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_GROCERY_HDR_110 alias Header
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Resume;
+  use action Prepare;
+  use action Activate;
+  use action Discard;
+
+  use association _Items { create; with draft; }
+}
+
+define behavior for ZC_GROCERY_ITM_110 alias Item
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Header { with draft; }
+}

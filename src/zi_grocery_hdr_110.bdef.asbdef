@@ -1,0 +1,77 @@
+unmanaged implementation in class zbp_grocery_saver_110 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_GROCERY_HDR_110 alias Header
+implementation in class zbp_grocery_hdr_110 unique
+draft table zgroc_hdr_d_110
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+  draft action Activate optimized;
+  draft action Discard;
+
+  field ( numbering : managed, readonly ) OrderUuid;
+  field ( readonly ) OrderId;
+  field ( readonly ) LocalLastChangedAt;
+
+  association _Items { create; with draft; }
+
+  mapping for zgrocery_hdr_110
+  {
+    OrderUuid          = order_uuid;
+    OrderId            = order_id;
+    CustomerName       = customer_name;
+    TotalPrice         = total_price;
+    CurrencyCode       = currency_code;
+    OverallStatus      = overall_status;
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt      = last_changed_at;
+  }
+}
+
+define behavior for ZI_GROCERY_ITM_110 alias Item
+implementation in class zbp_grocery_itm_110 unique
+draft table zgroc_itm_d_110
+lock dependent by _Header
+authorization dependent by _Header
+etag master LocalLastChangedAt
+{
+  create; // <--- This line is mandatory for 'use create' in projection
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) ItemUuid;
+  field ( readonly ) OrderUuid, ItemId;
+  field ( readonly ) LocalLastChangedAt;
+
+  association _Header { with draft; }
+
+  mapping for zgrocery_itm_110
+  {
+    ItemUuid           = item_uuid;
+    OrderUuid          = order_uuid;
+    ItemId             = item_id;
+    Product            = product;
+    Quantity           = quantity;
+    Unit               = unit;
+    Price              = price;
+    CurrencyCode       = currency_code;
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt      = last_changed_at;
+  }
+}
